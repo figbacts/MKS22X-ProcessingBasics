@@ -40,36 +40,41 @@ class Visualizer {
 
     //???WRITE THIS METHOD FIRST!!!
     //THESE ARE WRONG: They just illustrate how they could look
-    fill(255, 0, 0);
-    rect(x, y+100, 40, 40);
     fill(0, 255, 0);
-    rect(x+40, y+50, 40, 50);
-    rect(x+80, y+50, 40, 50);
-
-
-    //Width of the visualizer is 400!
-
-  
-  }
-  void update() {
-    //???WRITE THIS METHOD SECOND!!!
     for (int i = 0; i < values.length; i++) {
-      values[i] += speeds[i]; //the speed updates the values. Do not touch this.
-      //??? keep them values between max/min value so they stay in the box.
+      if (values[i] < 0) {
+        fill(0, 255, 0);
+      }
+      if (values[i] > 0) {
+        fill(255, 0, 0);
+      }
+        rect(x + i * 40, y + 100, 40, values[i]);
+      }
 
-      //??? reverse the speeds so the bar oscillates up/down when it reaches max/min
 
-      
+
+      //Width of the visualizer is 400!
+    }
+    void update() {
+      //???WRITE THIS METHOD SECOND!!!
+      for (int i = 0; i < values.length; i++) {
+        values[i] += speeds[i]; //the speed updates the values. Do not touch this.
+        if (values[i] > 100 || values[i] < -100) {
+          speeds[i] *= -1;
+        }
+        //??? keep them values between max/min value so they stay in the box.
+
+        //??? reverse the speeds so the bar oscillates up/down when it reaches max/min
+      }
     }
   }
-}
 
-void setup() {
-  size(600, 500);
-  v = new Visualizer(20, 20);
-}
-void draw() {
-  background(255);
-  v.display();
-  v.update();
-}
+  void setup() {
+    size(600, 500);
+    v = new Visualizer(20, 20);
+  }
+  void draw() {
+    background(255);
+    v.display();
+    v.update();
+  }
